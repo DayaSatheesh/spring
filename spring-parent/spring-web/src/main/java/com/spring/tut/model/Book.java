@@ -3,6 +3,7 @@ package com.spring.tut.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,7 +22,7 @@ public class Book {
     private String isbn;
     private String publisher;
 
-    @ManyToMany
+    @ManyToMany(cascade={CascadeType.ALL})
     @JoinTable(name="author_book", joinColumns= @JoinColumn(name="book_id"),
     		inverseJoinColumns=@JoinColumn(name="author_id")	)
     private Set<Author> authors = new HashSet<>();
@@ -30,6 +31,13 @@ public class Book {
 
     }
 
+    public Book(String title, String isbn, String publisher){
+        this.title = title;
+        this.isbn = isbn;
+        this.publisher = publisher;
+    }
+
+    
     public Book(String title, String isbn, String publisher, Set<Author> authors){
         this.title = title;
         this.isbn = isbn;
